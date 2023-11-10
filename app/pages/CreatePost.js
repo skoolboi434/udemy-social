@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Page from '../components/Page';
 import Axios from 'axios';
+import DispatchContext from '../DispatchContext';
+import StateContext from '../StateContext';
 
 const CreatePost = props => {
   const [title, setTitle] = useState();
@@ -9,15 +11,18 @@ const CreatePost = props => {
 
   const navgiate = useNavigate();
 
+  const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const res = await Axios.post('/create-post', {
         title,
         body,
-        token: localStorage.getItem('complexappToken')
+        token: appState.user.token
       });
-      props.addFlashMessage('Congrats, you successfully created a post.');
+      appDispatch({ type: 'flashMessage', value: 'Congrats, you created a new post.' });
       // Redirect To New Post URL
       navgiate(`/post/${res.data}`);
     } catch (error) {
@@ -31,7 +36,7 @@ const CreatePost = props => {
           <label htmlFor='post-title' className='text-muted mb-1'>
             <small>Title</small>
           </label>
-          <input onChange={e => setTitle(e.target.value)} autoFocus name='title' id='post-title' className='form-control form-control-lg form-control-title' type='text' placeholder='' autocomplete='off' />
+          <input onChange={e => setTitle(e.target.value)} autoFocus name='title' id='post-title' className='form-control form-control-lg form-control-title' type='text' placeholder='' autoComplete='off' />
         </div>
 
         <div className='form-group'>

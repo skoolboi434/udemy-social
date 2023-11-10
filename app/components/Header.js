@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HeaderLoggedOut from './HeaderLoggedOut';
 import HeaderLoggedIn from './HeaderLoggedIn';
+import StateContext from '../StateContext';
 
 const Header = props => {
-  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('complexappToken')));
+  const appState = useContext(StateContext);
 
   return (
     <>
@@ -16,7 +17,7 @@ const Header = props => {
               ComplexApp{' '}
             </Link>
           </h4>
-          {props.loggedIn ? <HeaderLoggedIn setLoggedIn={props.setLoggedIn} /> : <HeaderLoggedOut setLoggedIn={setLoggedIn} />}
+          {appState.loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
         </div>
       </header>
     </>

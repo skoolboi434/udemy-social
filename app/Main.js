@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useState, useReducer, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useImmerReducer } from 'use-immer';
 import Header from './components/Header';
@@ -14,6 +15,7 @@ import SinglePost from './pages/SinglePost';
 import FlashMessages from './components/FlashMessages';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
+import ProfileScreen from './pages/ProfileScreen';
 
 Axios.defaults.baseURL = 'http://localhost:8080';
 
@@ -69,6 +71,7 @@ function Main() {
             <Route path='/terms' element={<TermsPage />} />
             <Route path='/create-post' element={<CreatePost />} />
             <Route path='/post/:id' element={<SinglePost />} />
+            <Route path='/profile/:username/*' element={<ProfileScreen />} />
           </Routes>
 
           <Footer />
@@ -78,8 +81,7 @@ function Main() {
   );
 }
 
-const root = ReactDOM.createRoot(document.querySelector('#app'));
-root.render(<Main />);
+const root = ReactDOM.createRoot(document.querySelector('#app')).render(<Main />);
 
 if (module.hot) {
   module.hot.accept();

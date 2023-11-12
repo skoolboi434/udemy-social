@@ -16,6 +16,8 @@ import FlashMessages from './components/FlashMessages';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 import ProfileScreen from './pages/ProfileScreen';
+import PostEditScreen from './pages/PostEditScreen';
+import NotFound from './components/NotFound';
 
 Axios.defaults.baseURL = 'http://localhost:8080';
 
@@ -69,9 +71,11 @@ function Main() {
             <Route path='/' exact={true} element={state.loggedIn ? <Home /> : <HomeGuests />} />
             <Route path='/about-us' element={<AboutPage />} />
             <Route path='/terms' element={<TermsPage />} />
-            <Route path='/create-post' element={<CreatePost />} />
-            <Route path='/post/:id' element={<SinglePost />} />
-            <Route path='/profile/:username/*' element={<ProfileScreen />} />
+            <Route path='/create-post' element={state.loggedIn ? <CreatePost /> : <HomeGuests />} />
+            <Route path='/post/:id' element={state.loggedIn ? <SinglePost /> : <HomeGuests />} />
+            <Route path='/post/:id/edit' element={state.loggedIn ? <PostEditScreen /> : <HomeGuests />} />
+            <Route path='/profile/:username/*' element={state.loggedIn ? <ProfileScreen /> : <HomeGuests />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
 
           <Footer />

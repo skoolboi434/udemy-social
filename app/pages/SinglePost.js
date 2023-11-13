@@ -33,7 +33,7 @@ const SinglePost = () => {
     return () => {
       ourRequest.cancel();
     };
-  }, []);
+  }, [id]);
 
   if (!isloading && !post) {
     return <NotFound />;

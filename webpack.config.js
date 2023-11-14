@@ -81,6 +81,13 @@ if (currentTask == 'webpackBuild') {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js'
   };
+
+  config.resolve = {
+    alias: {
+      '@components': path.resolve(__dirname, 'app/components')
+    },
+    extensions: ['.js', '.jsx']
+  };
 }
 
 module.exports = config;

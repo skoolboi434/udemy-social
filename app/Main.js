@@ -18,9 +18,9 @@ import DispatchContext from './DispatchContext';
 import ProfileScreen from './pages/ProfileScreen';
 import PostEditScreen from './pages/PostEditScreen';
 import NotFound from './components/NotFound';
-const Search = React.lazy(() => import('./components/search'));
+const Search = React.lazy(() => import('./components/search.js'));
 import { CSSTransition } from 'react-transition-group';
-const Chat = React.lazy(() => import('./components/chat'));
+const Chat = React.lazy(() => import('./components/chat.js'));
 import Loader from './components/Loader';
 
 Axios.defaults.baseURL = process.env.BACKENDURL || '';

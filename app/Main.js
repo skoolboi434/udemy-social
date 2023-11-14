@@ -84,6 +84,45 @@ function Main() {
     }
   }, [state.loggedIn]);
 
+  useEffect(() => {
+    if (state.requestCount) {
+      const ourRequest = Axios.CancelToken.source();
+      const fetchResults = async () => {
+        try {
+          const res = await Axios.post('/search', { searchTerm: state.searchTerm }, { cancelToken: ourRequest.token });
+          setState(draft => {
+            draft.results = res.data;
+            draft.show = 'results';
+          });
+        } catch (error) {
+          console.log('There was a problem or the request was canceled.');
+        }
+      };
+      fetchResults();
+      return () => ourRequest.cancel();
+    }
+  }, [state.requestCount]);
+
+  // Check if token has expired or not on first render
+  useEffect(() => {
+    if (state.loggedIn) {
+      const ourRequest = Axios.CancelToken.source();
+      const fetchResults = async () => {
+        try {
+          const res = await Axios.post('/checkToken', { token: state.user.token }, { cancelToken: ourRequest.token });
+          if (!res.data) {
+            dispatch({ type: 'logout' });
+            dispatch({ type: 'flashMessage', value: 'Your session has expired. Please log in again.' });
+          }
+        } catch (error) {
+          console.log('There was a problem or the request was canceled.');
+        }
+      };
+      fetchResults();
+      return () => ourRequest.cancel();
+    }
+  }, []);
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>

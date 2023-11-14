@@ -5,9 +5,10 @@
   "main": "test.js",
   "scripts": {
     "start": "node ./backend/db.js",
+    "start-backend": "cd backend && npm install && node ./backend/db.js",
     "dev": "npm-run-all -s generate webpackDev",
     "webpackDev": "webpack serve",
-    "build": "npm-run-all -s generate webpackBuild start",
+    "build": "npm-run-all -s generate webpackBuild start-backend",
     "webpackBuild": "webpack",
     "previewDist": "node previewDist",
     "generate": "babel-node --presets=@babel/preset-react,@babel/preset-env generateHTML.js",

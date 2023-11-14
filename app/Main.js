@@ -10,19 +10,21 @@ import HomeGuests from './pages/HomeGuests';
 import AboutPage from './pages/AboutPage';
 import TermsPage from './pages/TermsPage';
 import Home from './pages/Home';
-import CreatePost from './pages/CreatePost.js';
-import SinglePost from './pages/SinglePost.js';
-// const CreatePost = React.lazy(() => import('./pages/CreatePost'));
-// const SinglePost = React.lazy(() => import('./pages/SinglePost'));
+// import CreatePost from './pages/CreatePost.js';
+// import SinglePost from './pages/SinglePost.js';
+const CreatePost = React.lazy(() => import('./pages/CreatePost'));
+const SinglePost = React.lazy(() => import('./pages/SinglePost'));
 import FlashMessages from './components/FlashMessages';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 import ProfileScreen from './pages/ProfileScreen';
 import PostEditScreen from './pages/PostEditScreen';
 import NotFound from './components/NotFound';
-const Search = React.lazy(() => import('./components/search.js'));
+// const Search = React.lazy(() => import('./components/search.js'));
+const Search = React.lazy(() => import('@components/search.js'));
 import { CSSTransition } from 'react-transition-group';
-const Chat = React.lazy(() => import('./components/chat.js'));
+//const Chat = React.lazy(() => import('./components/chat.js'));
+const Chat = React.lazy(() => import('@components/chat.js'));
 import Loader from './components/Loader';
 
 Axios.defaults.baseURL = process.env.BACKENDURL || '';
@@ -146,9 +148,13 @@ function Main() {
           </Suspense>
 
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames='search-overlay' unmountOnExit>
-            <Search />
+            <div className='search-overlay'>
+              <Suspense fallback=''>
+                <Search />
+              </Suspense>
+            </div>
           </CSSTransition>
-          {state.loggedIn && <Chat />}
+          <Suspense fallback=''>{state.loggedIn && <Chat />}</Suspense>
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

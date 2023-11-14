@@ -6,6 +6,7 @@ import StateContext from '../StateContext';
 
 const Header = props => {
   const appState = useContext(StateContext);
+  const headerContent = appState.loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />;
 
   return (
     <>
@@ -17,7 +18,7 @@ const Header = props => {
               ComplexApp{' '}
             </Link>
           </h4>
-          {appState.loggedIn ? <HeaderLoggedIn /> : <HeaderLoggedOut />}
+          {!props.staticEmpty ? headerContent : ''}
         </div>
       </header>
     </>

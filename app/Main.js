@@ -25,7 +25,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import Loader from './components/Loader';
 
-Axios.defaults.baseURL = process.env.BACKENDURL || '';
+Axios.defaults.baseURL = process.env.BACKENDURL || 'https://social-backend-8lgk.onrender.com';
 
 function Main() {
   const initialState = {

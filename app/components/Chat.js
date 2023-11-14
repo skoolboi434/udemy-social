@@ -25,7 +25,7 @@ const Chat = () => {
   }, [appState.isChatOpen]);
 
   useEffect(() => {
-    socket.current = io('http://localhost:8080');
+    socket.current = io(process.env.BACKENDURL || 'https://social-backend-8lgk.onrender.com');
 
     socket.current.on('chatFromServer', msg => {
       setState(draft => {

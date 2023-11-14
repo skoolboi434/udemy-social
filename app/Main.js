@@ -10,8 +10,10 @@ import HomeGuests from './pages/HomeGuests';
 import AboutPage from './pages/AboutPage';
 import TermsPage from './pages/TermsPage';
 import Home from './pages/Home';
-const CreatePost = React.lazy(() => import('./pages/CreatePost'));
-const SinglePost = React.lazy(() => import('./pages/SinglePost'));
+import CreatePost from './pages/CreatePost.js';
+import SinglePost from './pages/SinglePost.js';
+// const CreatePost = React.lazy(() => import('./pages/CreatePost'));
+// const SinglePost = React.lazy(() => import('./pages/SinglePost'));
 import FlashMessages from './components/FlashMessages';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
@@ -144,13 +146,9 @@ function Main() {
           </Suspense>
 
           <CSSTransition timeout={330} in={state.isSearchOpen} classNames='search-overlay' unmountOnExit>
-            <div className='search-overlay'>
-              <Suspense fallback=''>
-                <Search />
-              </Suspense>
-            </div>
+            <Search />
           </CSSTransition>
-          <Suspense fallback=''>{state.loggedIn && <Chat />}</Suspense>
+          {state.loggedIn && <Chat />}
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>
